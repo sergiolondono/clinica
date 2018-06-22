@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>RestServiceJavascript</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+        <h1>Egresos</h1>
+    </body>
+
+    <script>
+        $(document).ready(function() {
+            $.getJSON('http://190.145.174.3:8082/integracion/Egresos?token=cl8i9ni0c9am1ed1e8ll1i6ncl1n1cam3d3ll1n', function(data) {
+                var dataService = JSON.parse(data);
+                genera_tabla(dataService);
+            });
+        });
+
+        function genera_tabla(dataService) {
+        // Obtener la referencia del elemento body
+        var body = document.getElementsByTagName("body")[0];
+        
+        // Crea un elemento <table> y un elemento <tbody>
+        var tabla  = document.createElement("table");
+
+        var tblHead = document.createElement("thead");
+        var rowHead = document.createElement("tr");
+
+        var cellHistoria = document.createElement("th");
+        var textCellHistoria = document.createTextNode("Historia");
+        cellHistoria.appendChild(textCellHistoria);
+        rowHead.appendChild(cellHistoria);
+
+        var cellConsecutivo = document.createElement("th");
+        var textCellConsecutivo = document.createTextNode("Consecutivo");
+        cellConsecutivo.appendChild(textCellConsecutivo);
+        rowHead.appendChild(cellConsecutivo);
+
+        var cellFechaEgreso = document.createElement("th");
+        var textCellFechaEgreso = document.createTextNode("FechaEgreso");
+        cellFechaEgreso.appendChild(textCellFechaEgreso);
+        rowHead.appendChild(cellFechaEgreso);
+
+        var cellTipoUsuario = document.createElement("th");
+        var textCellTipoUsuario = document.createTextNode("TipoUsuario");
+        cellTipoUsuario.appendChild(textCellTipoUsuario);
+        rowHead.appendChild(cellTipoUsuario);
+        
+        var cellCausaIngreso = document.createElement("th");
+        var textCellCausaIngreso = document.createTextNode("CausaIngreso");
+        cellCausaIngreso.appendChild(textCellCausaIngreso);
+        rowHead.appendChild(cellCausaIngreso);
+
+        var cellTipo = document.createElement("th");
+        var textCellTipo = document.createTextNode("Tipo");
+        cellTipo.appendChild(textCellTipo);
+        rowHead.appendChild(cellTipo);
+
+        var tblBody = document.createElement("tbody");
+        tblBody.appendChild(rowHead);
+
+        dataService.forEach(data => {
+                var rowBody = document.createElement("tr");
+                
+                var cellHistoria = document.createElement("td");
+                var textCellHistoria = document.createTextNode(data.historia);
+                cellHistoria.appendChild(textCellHistoria);
+                rowBody.appendChild(cellHistoria);
+
+                var cellConsecutivo = document.createElement("td");
+                var textCellConsecutivo = document.createTextNode(data.consecutivo);
+                cellConsecutivo.appendChild(textCellConsecutivo);
+                rowBody.appendChild(cellConsecutivo);
+
+                var cellFechaEgreso = document.createElement("td");
+                var textFechaEgreso = document.createTextNode(data.fecegreso);
+                cellFechaEgreso.appendChild(textFechaEgreso);
+                rowBody.appendChild(cellFechaEgreso);
+
+                var cellTipoUsuario = document.createElement("td");
+                var textTipoUsuario = document.createTextNode(data.tipousu);
+                cellTipoUsuario.appendChild(textTipoUsuario);
+                rowBody.appendChild(cellTipoUsuario);
+
+                var cellCausaIngreso = document.createElement("td");
+                var textCausaIngreso = document.createTextNode(data.causaing);
+                cellCausaIngreso.appendChild(textCausaIngreso);
+                rowBody.appendChild(cellCausaIngreso);                
+
+                var cellTipo = document.createElement("td");
+                var textTipo = document.createTextNode(data.tipo);
+                cellTipo.appendChild(textTipo);
+                rowBody.appendChild(cellTipo); 
+
+                tblBody.appendChild(rowBody);
+            });
+        
+        // posiciona el <tbody> debajo del elemento <table>
+        tabla.appendChild(tblBody);
+        // appends <table> into <body>
+        body.appendChild(tabla);
+
+        $("table").addClass("table table-bordered table-hover");
+    }
+
+    </script>
+</html>
